@@ -99,7 +99,17 @@ def preview_gif():
     gif = Brat(text, start_pixel_size, end_pixel_size, fps, seconds, bg_color, text_color)
 
     # Send the GIF as a response
-    return send_file(gif, mimetype='image/gif')
+    return send_file(
+        gif,
+        mimetype='image/gif',
+        as_attachment=True,
+        download_name=f'{text}_{start_pixel_size}_{end_pixel_size}_{fps}_{bg_color}_{text_color}.gif',
+        headers={"Cache-Control": "no-store"}  # 添加防止缓存的头
+    )
+
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
+
